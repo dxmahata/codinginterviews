@@ -11,9 +11,11 @@ class PriorityQueue:
     def __init__(self):
         self._queue = []
         self._index = 0
+        self._main_items = {}
 
     def push(self, item, priority):
         heapq.heappush(self._queue, (priority, self._index, item))
+        self._main_items[item] = self._index
         self._index += 1
 
     def pop(self):
@@ -24,6 +26,10 @@ class PriorityQueue:
             return True
         else:
             return False
+        
+    def __contains__(self, item):
+        return item in self._main_items
+        
         
 class Vertex:
     def __init__(self, node):
@@ -120,32 +126,29 @@ class DirectedGraph:
     def getPrevious(self, current):
         return self.previous
     
-def dijkstras(G, start):
+def prims(G, start):
     if G.getVertices() == []:
         return []
     else:
+        spanning_tree = []
         pq = PriorityQueue()
         start.setDistance(0)
         start.setPrevious(None)
         for vertex in G:
             pq.push(vertex, vertex.getDistance())
-            
+        
         while pq.empty() == False:
             curr_node = pq.pop()
+            if curr_node.getVertexID() not in spanning_tree:
+                spanning_tree.append(curr_node.getVertexID())
             for nbr in curr_node.getConnections():
-                new_dist = curr_node.getDistance() + curr_node.getWeight(nbr)
-                if new_dist < nbr.getDistance():
+                new_dist = curr_node.getWeight(nbr)
+                if nbr in pq and new_dist < nbr.getDistance():
                     nbr.setDistance(new_dist)
                     nbr.setPrevious(curr_node)
                     pq.push(nbr, nbr.getDistance())
         
-        shortest_paths = {}
-        for entries in G:
-            if entries.getVertexID() == start.getVertexID():
-                pass
-            else:
-                shortest_paths[entries.getVertexID()] = get_shortest_path(start, entries)
-        return shortest_paths
+        return spanning_tree
             
 def get_shortest_path(start, target):
     path = []
@@ -174,4 +177,4 @@ if __name__ == "__main__":
     G.addEdge("d", "e", 4)
     
     pq = PriorityQueue()
-    print(dijkstras(G, G.getVertex("a")))
+    print(prims(G, G.getVertex("a")))
