@@ -183,4 +183,4 @@ if __name__ == "__main__":
     print(soln.findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
     print(soln.findOrder(2, [[1,0]]))
     print(soln.findOrder(3, [[1,0]]))
-    print(soln.findOrder(10, [[5,8],[3,5],[1,9],[4,5],[0,2],[1,9],[7,8],[4,9]]))
+    #print(soln.findOrder(10, [[5,8],[3,5],[1,9],[4,5],[0,2],[1,9],[7,8],[4,9]]))
