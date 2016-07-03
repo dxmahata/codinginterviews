@@ -55,7 +55,6 @@ class Solution(object):
                 self.map[fro] = pq
                 self.map[fro].push(to)
         
-        print(self.map)
         self.dfs("JFK")
         self.result.reverse()
         return self.result

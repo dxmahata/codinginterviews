@@ -4,7 +4,7 @@ Created on Jul 1, 2016
 @author: Debanjan
 '''
 import sys
-from queue import Queue
+
 class Vertex:
     def __init__(self, node):
         self.id = node
